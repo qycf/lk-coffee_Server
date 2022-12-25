@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lkcoffee.mapper.AddressMapper">
+
+
+    <select id="selectByOrderId" resultType="com.lkcoffee.entity.Address">
+        SELECT a.*
+        FROM address a
+                 LEFT JOIN order_address oa ON oa.address_id = a.id
+        WHERE oa.order_id = #{order_id}
+    </select>
+
+    <select id="getDefaultAddress" resultType="com.lkcoffee.entity.Address">
+        SELECT a.*
+        FROM address a
+                 LEFT JOIN user_address ua ON a.id = ua.address_id
+        WHERE ua.user_id = #{user_id}
+    </select>
+
+
+    <!--    <insert id="insertAddress" useGeneratedKeys="true" parameterType="com.lkcoffee.entity.Address">-->
+    <!--        INSERT INTO `luckin_coffee`.`address` ( `areaCode`, `city`, `county`, `isDefault`, `name`, `province`, `tel`, `addressDetail`) VALUES ('120104', '天津', '南开区', 0, '天', '天津市', '15177386668', '南开大学3');-->
+    <!--    </insert>-->
+    <insert id="insertAddress" useGeneratedKeys="true" parameterType="com.lkcoffee.entity.Address">
+        INSERT INTO `luckin_coffee`.`address` (`areaCode`, `city`, `county`, `isDefault`, `name`, `province`, `tel`,
+                                               `addressDetail`)
+        VALUES (#{areaCode}, #{city}, #{county}, #{isDefault}, #{name}, #{province}, #{tel}, #{addressDetail});
+    </insert>
+
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lkcoffee.mapper.GoodsMapper">
+    <select id="getGoodsByMenuId" resultType="com.lkcoffee.entity.Goods">
+        SELECT g.*
+        FROM (menu m LEFT JOIN menu_goods mg ON m.id = mg.menu_id)
+                 LEFT JOIN goods g ON mg.goods_id = g.id
+        WHERE m.id = #{id}
+    </select>
+    <select id="getGoodsList" resultType="com.lkcoffee.entity.Goods">
+        SELECT *
+        FROM goods
+    </select>
+    <select id="getUserLike" resultType="com.lkcoffee.entity.Goods">
+        SELECT g.*
+        FROM goods g
+                 LEFT JOIN user_like ul ON g.id = ul.goods_id
+        WHERE ul.user_id = #{user_id}
+    </select>
+</mapper>

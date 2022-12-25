@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lkcoffee.mapper.UserOrderMapper">
+
+    <select id="getOrderGoodsListByOrderId" resultType="com.lkcoffee.pojo.OrderGoodsVO">
+        SELECT g.*,
+               og.order_id,
+               og.cup,
+               og.temperature,
+               og.sugar,
+               og.count,
+               uo.create_time
+        FROM order_goods og
+                 LEFT JOIN goods g ON og.goods_id = g.id
+                 LEFT JOIN user_order uo ON uo.order_id = og.order_id
+        WHERE og.order_id = #{orderId}
+    </select>
+</mapper>
