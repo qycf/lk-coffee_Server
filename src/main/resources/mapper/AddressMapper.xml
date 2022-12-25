@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lkcoffee.mapper.AddressMapper">
 
+    <update id="updateOldDefaultAddress" >
+        UPDATE user_address ua
+            LEFT JOIN address a ON ua.address_id = a.id
+            SET a.isDefault = 0
+        WHERE ua.user_id = #{user_id} and a.isDefault = 1
+    </update>
+
 
     <select id="selectByOrderId" resultType="com.lkcoffee.entity.Address">
         SELECT a.*
@@ -10,11 +17,11 @@
         WHERE oa.order_id = #{order_id}
     </select>
 
-    <select id="getDefaultAddress" resultType="com.lkcoffee.entity.Address">
+    <select id="getUserAddress" resultType="com.lkcoffee.entity.Address">
         SELECT a.*
         FROM address a
                  LEFT JOIN user_address ua ON a.id = ua.address_id
-        WHERE ua.user_id = #{user_id}
+        WHERE ua.user_id = #{user_id} ORDER BY a.isDefault DESC
     </select>
 
 

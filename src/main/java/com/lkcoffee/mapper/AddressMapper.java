@@ -19,7 +19,9 @@ public interface AddressMapper extends BaseMapper<Address> {
 
     Address selectByOrderId(@Param("order_id") String orderId);
 
-    List<Address> getDefaultAddress(@Param("user_id") Integer userId);
+    List<Address> getUserAddress(@Param("user_id") Integer userId);
+
+    void updateOldDefaultAddress(@Param("user_id") Integer userId);
 
     void insertAddress(@Param("areaCode") String areaCode,
                        @Param("city") String city,

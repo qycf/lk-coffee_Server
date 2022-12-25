@@ -51,11 +51,11 @@ public class AddressController {
      * @return addressInfo
      */
     @GetMapping
-    public HashMap<String, Object> getUserAddress() {
-        List<Address> addressList = addressMapper.getDefaultAddress(StpUtil.getLoginIdAsInt());
-        HashMap<String, Object> addressInfo = new HashMap<>();
+    public List<AddressListAddress> getUserAddress() {
+//        用户的收获地址列表
+        List<Address> addressList = addressMapper.getUserAddress(StpUtil.getLoginIdAsInt());
         List<AddressListAddress> addressListAddresses = new ArrayList<>();
-        System.out.println(addressList);
+//        拼接id地址为前端所需格式
         addressList.forEach(address -> {
             AddressListAddress addressListAddress = new AddressListAddress();
             addressListAddress.setId(address.getId());
@@ -64,15 +64,14 @@ public class AddressController {
             addressListAddress.setAddress(address.getProvince() + address.getCity() + address.getCounty() + address.getAddressDetail());
             if (address.getIsDefault() == 1) {
                 addressListAddress.setIsDefault(true);
-                addressInfo.put("default_address", addressListAddress);
-            } else {
-                addressListAddresses.add(addressListAddress);
             }
+            //           添加到返回的数据中
+            addressListAddresses.add(addressListAddress);
         });
         if (addressListAddresses.size() > 0) {
-            addressInfo.put("address_list", addressListAddresses);
+            return addressListAddresses;
         }
-        return addressInfo;
+        return null;
     }
 
     /**
@@ -81,32 +80,24 @@ public class AddressController {
 
     @PostMapping
     @SaCheckLogin
-    public Result<Object> savaOrUpdateAddress(@RequestBody Address address) {
+    public void savaOrUpdateAddress(@RequestBody Address address) {
+        // id为null则是添加地址操作
+        int user_id = StpUtil.getLoginIdAsInt();
+        if (address.getIsDefault() == 1) {
+            // 如果是默认地址则将原来的默认地址设置为非默认地址
+            addressMapper.updateOldDefaultAddress(StpUtil.getLoginIdAsInt());
+        }
         if (address.getId() == null) {
-            int loginIdAsInt = StpUtil.getLoginIdAsInt();
-            log.info("用户id:{},新增地址", loginIdAsInt);
-            boolean save1 = addressService.save(address);
+            log.info("用户id:{},新增地址", user_id);
+            addressService.save(address);
             UserAddress userAddress = new UserAddress();
+            userAddress.setUserId(user_id);
             userAddress.setAddressId(address.getId());
-            userAddress.setUserId(loginIdAsInt);
-            boolean save = userAddressService.save(userAddress);
-            if (save && save1) {
-                AddressListAddress addressListAddress = new AddressListAddress();
-                addressListAddress.setId(address.getId());
-                addressListAddress.setName(address.getName());
-                addressListAddress.setTel(address.getTel());
-                addressListAddress.setAddress(address.getProvince() + address.getCity() + address.getCounty() + address.getAddressDetail());
-                if (address.getIsDefault() == 1) {
-                    addressListAddress.setIsDefault(true);
-                }
-                return Result.success(addressListAddress);
-            } else
-                throw new APIException(ResultCode.FAILED);
+            userAddressService.save(userAddress);
         } else {
+            // id不为null则是修改地址操作
             log.info("用户id:{},修改地址", StpUtil.getLoginIdAsInt());
-            if (!addressService.updateById(address))
-                throw new APIException(ResultCode.FAILED);
-            return Result.success("修改成功");
+            addressService.updateById(address);
         }
     }
 

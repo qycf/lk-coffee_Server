@@ -47,8 +47,9 @@ public class GoodsController {
             return goodsMapper.getGoodsList();
         }
         List<Goods> goodsByMenuId = goodsMapper.getGoodsByMenuId(menuId);
-        if (goodsByMenuId.get(0) == null) {
-            throw new APIException("没有商品");
+        System.out.println();
+        if (goodsByMenuId.size()== 0) {
+            return null;
         }
         return goodsByMenuId;
     }
