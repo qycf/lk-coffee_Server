@@ -2,6 +2,7 @@ package com.lkcoffee.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.util.DesensitizedUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.lkcoffee.entity.User;
@@ -66,6 +67,8 @@ public class UserController {
         }
         StpUtil.login(user.getId());
         UserVo userInfo = userMapper.selectByPhoneNumber(user.getTel());
+        String tel = DesensitizedUtil.mobilePhone(userInfo.getTel());
+        userInfo.setTel(tel);
         HashMap<String, Object> loginSuccessInfo = new HashMap<>();
         loginSuccessInfo.put("token", StpUtil.getTokenValue());
         loginSuccessInfo.put("user_info", userInfo);
@@ -79,6 +82,8 @@ public class UserController {
             throw new APIException("手机号或密码错误");
         }
         UserVo userInfo = userMapper.selectByPhoneNumber(user.getTel());
+        String tel = DesensitizedUtil.mobilePhone(userInfo.getTel());
+        userInfo.setTel(tel);
         StpUtil.login(user.getId());
         HashMap<String, Object> loginSuccessInfo = new HashMap<>();
         loginSuccessInfo.put("token", StpUtil.getTokenValue());
@@ -105,6 +110,8 @@ public class UserController {
 //        设置新用户角色
         userRoleService.save(new UserRole(null, newUser.getId(), 2));
         UserVo userInfo = userMapper.selectByPhoneNumber(registerDto.getPhoneNumber());
+        String tel = DesensitizedUtil.mobilePhone(userInfo.getTel());
+        userInfo.setTel(tel);
         StpUtil.login(newUser.getId());
         HashMap<String, Object> regSuccessInfo = new HashMap<>();
         regSuccessInfo.put("token", StpUtil.getTokenValue());
