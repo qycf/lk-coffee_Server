@@ -4,6 +4,8 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.DesensitizedUtil;
 import cn.hutool.crypto.digest.DigestUtil;
+import cn.hutool.http.HttpUtil;
+import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.lkcoffee.entity.User;
 import com.lkcoffee.entity.UserRole;
@@ -19,10 +21,18 @@ import com.lkcoffee.service.UserService;
 import com.lkcoffee.utils.RedisUtil;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.UUID;
+
+import static com.lkcoffee.utils.UpYunUtils.testSync;
 
 /**
  * <p>
@@ -134,6 +144,44 @@ public class UserController {
         return Result.success("修改成功");
     }
 
+    @PostMapping("/avatar")
+    @SaCheckLogin
+    public Result<Object> updateAvatar(@RequestParam("file") MultipartFile file) throws IOException, NoSuchAlgorithmException, SignatureException, InvalidKeyException {
+        //上传的文件名
+        String filename = file.getOriginalFilename();
+        System.out.println("要上传服务器的文件名是:" + filename);
+        //获取文件的后缀
+        assert filename != null;
+        String suffixName = filename.substring(filename.lastIndexOf("."));
+        //生成一个新的文件名
+        filename = UUID.randomUUID() + suffixName;
+        System.out.println("要上传服务器的文件名是:" + filename);
+
+        byte[] byteArr = file.getBytes();
+        com.upyun.Result upyunData = testSync(byteArr, filename);
+        //将json转换为Object对象(这里需要引入fastjson依赖)
+        if (upyunData.getCode() == 200) {
+            JSONObject photoMsg = JSONObject.parseObject(upyunData.getMsg());
+            String picUrl = "https://cdn1.zcsuper.cn" + photoMsg.getString("url");
+            System.out.println("文件上传成功，地址为：" + picUrl);
+            userMapper.updateAva(StpUtil.getLoginIdAsInt(), picUrl);
+            HashMap<String, Object> stringObjectHashMap = new HashMap<>();
+            stringObjectHashMap.put("imgurl", picUrl);
+            return Result.success(stringObjectHashMap);
+        }
+        return Result.fail("上传失败");
+    }
+
+    @PostMapping("/avatar/random")
+    @SaCheckLogin
+    public Result<Object> setRandomAva() {
+        String url = "http://api.btstu.cn/sjtx/api.php?lx=c1&format=json";
+        String result = HttpUtil.get(url);
+        JSONObject jsonObject = JSONObject.parseObject(result);
+        String imgUrl = jsonObject.get("imgurl").toString();
+        userMapper.updateAva(StpUtil.getLoginIdAsInt(), imgUrl);
+        return Result.success(jsonObject);
+    }
 
     public boolean codeIsTrue(String redisPath, String phoneNumber, String code) {
 

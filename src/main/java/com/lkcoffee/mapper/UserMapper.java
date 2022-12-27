@@ -22,5 +22,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     UserVo selectById(@Param("id") Integer id);
 
+    void updateAva(@Param("user_id") Integer id, @Param("pic_url") String picUrl);
+
 
 }

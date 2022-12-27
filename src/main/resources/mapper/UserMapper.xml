@@ -30,4 +30,9 @@
         WHERE u.id = #{id}
     </select>
 
+    <update id="updateAva">
+        UPDATE `luckin_coffee`.`user` SET `avatar` = #{pic_url}  WHERE `id` = #{user_id};
+    </update>
+
+
 </mapper>

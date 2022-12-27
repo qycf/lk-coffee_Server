@@ -21,7 +21,7 @@ public class UpYunUtils {
 
         //添加 SAVE_KEY 参数
         //filename为文件名(例如：12345.jpg)
-        paramsMap.put(Params.SAVE_KEY, "/jx3m/" + filename);
+        paramsMap.put(Params.SAVE_KEY, "/lk/" + filename);
 
         //添加同步上传作图参数 X_GMKERL_THUMB
         //限定图片宽度为 300px、锐化、压缩质量 80、存储为 png 格式（参数不区分先后顺序）

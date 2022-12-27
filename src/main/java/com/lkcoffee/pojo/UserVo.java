@@ -20,6 +20,8 @@ public class UserVo {
     private Integer id;
     private String username;
     private String tel;
+    private String detail;
+    private String avatar;
     private String roleName;
     private String roleCode;
 
