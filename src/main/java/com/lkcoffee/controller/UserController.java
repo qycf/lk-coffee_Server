@@ -5,16 +5,14 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.DesensitizedUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.lkcoffee.entity.User;
 import com.lkcoffee.entity.UserRole;
 import com.lkcoffee.exception.APIException;
 import com.lkcoffee.mapper.UserMapper;
-import com.lkcoffee.pojo.PwLoginDto;
-import com.lkcoffee.pojo.RegisterDto;
-import com.lkcoffee.pojo.TelLoginDto;
-import com.lkcoffee.pojo.UserVo;
+import com.lkcoffee.pojo.*;
 import com.lkcoffee.result.Result;
 import com.lkcoffee.service.UserRoleService;
 import com.lkcoffee.service.UserService;
@@ -29,6 +27,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -182,6 +181,17 @@ public class UserController {
         userMapper.updateAva(StpUtil.getLoginIdAsInt(), imgUrl);
         return Result.success(jsonObject);
     }
+
+    @PostMapping("/update/{type}")
+    @SaCheckLogin
+    public Result<Object> updatePassword(@RequestParam String value, @PathVariable String type) {
+        if (type.equals("password")) {
+            value = DigestUtil.md5Hex(value);
+        }
+        userMapper.updateProfile(StpUtil.getLoginIdAsInt(), type, value);
+        return Result.success("修改成功");
+    }
+
 
     public boolean codeIsTrue(String redisPath, String phoneNumber, String code) {
 

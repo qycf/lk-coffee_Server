@@ -24,5 +24,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     void updateAva(@Param("user_id") Integer id, @Param("pic_url") String picUrl);
 
+    void updateProfile(@Param("user_id") Integer id, @Param("type") String type, @Param("value") String value);
+
 
 }

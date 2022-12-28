@@ -41,6 +41,12 @@ public class GoodsController {
         return goodsMapper.getGoodsList();
     }
 
+    @GetMapping("random")
+    public List<Goods> getGoodsListRandom() {
+        return goodsMapper.getGoodsListRandom();
+    }
+
+
     @GetMapping("/menu/{menuId}")
     public List<Goods> getGoodsListByMenuId(@PathVariable(required = false) Integer menuId) {
         if (menuId == null) {
@@ -48,7 +54,7 @@ public class GoodsController {
         }
         List<Goods> goodsByMenuId = goodsMapper.getGoodsByMenuId(menuId);
         System.out.println();
-        if (goodsByMenuId.size()== 0) {
+        if (goodsByMenuId.size() == 0) {
             return null;
         }
         return goodsByMenuId;

@@ -23,5 +23,7 @@ public interface GoodsMapper extends BaseMapper<Goods> {
 
     List<Goods> getUserLike(@Param("user_id") Integer userId);
 
+    List<Goods> getGoodsListRandom();
+
 
 }
