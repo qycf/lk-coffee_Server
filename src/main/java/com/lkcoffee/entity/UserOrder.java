@@ -32,8 +32,11 @@ public class UserOrder implements Serializable {
 
     @JsonProperty("user_id")
     private Integer userId;
+
     @JsonProperty("order_id")
     private String orderId;
+
+    private Integer status;
 
     @TableField(fill = FieldFill.INSERT, value = "create_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

@@ -2,6 +2,8 @@ package com.lkcoffee.controller;
 
 import com.lkcoffee.entity.Menu;
 import com.lkcoffee.exception.APIException;
+import com.lkcoffee.mapper.MenuMapper;
+import com.lkcoffee.pojo.MenuVo;
 import com.lkcoffee.result.Result;
 import com.lkcoffee.service.MenuService;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,9 @@ public class MenuController {
     @Resource
     private MenuService menuService;
 
+    @Resource
+    private MenuMapper menuMapper;
+
     /**
      * 获取菜单列表
      *
@@ -31,8 +36,8 @@ public class MenuController {
      */
     @GetMapping
     public Result<Object> getMenuList() {
-        List<Menu> list = menuService.list();
-        return Result.success(list);
+        List<MenuVo> menuList = menuMapper.getMenuList();
+        return Result.success(menuList);
     }
 
     /**

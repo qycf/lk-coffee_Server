@@ -19,6 +19,9 @@
     </select>
 
     <select id="getGoodsListRandom" resultType="com.lkcoffee.entity.Goods">
-        SELECT distinct g.* FROM menu_goods mg LEFT JOIN goods g ON mg.goods_id = g.id ORDER BY RAND() LIMIT 4;
+        SELECT distinct g.*
+        FROM menu_goods mg
+                 LEFT JOIN goods g ON mg.goods_id = g.id
+        ORDER BY RAND() LIMIT 4;
     </select>
 </mapper>

@@ -33,5 +33,7 @@ public class OrderVo {
     @JsonProperty("goods_list")
     private List<OrderGoodsVO> goodsList;
 
+    private Integer status;
+
 
 }

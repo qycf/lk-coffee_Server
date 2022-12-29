@@ -26,5 +26,5 @@ public interface UserMapper extends BaseMapper<User> {
 
     void updateProfile(@Param("user_id") Integer id, @Param("type") String type, @Param("value") String value);
 
-
+    Double getUserTodayExpend(@Param("user_id") Integer id);
 }

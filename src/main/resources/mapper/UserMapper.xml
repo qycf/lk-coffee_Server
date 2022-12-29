@@ -31,7 +31,9 @@
     </select>
 
     <update id="updateAva">
-        UPDATE `luckin_coffee`.`user` SET `avatar` = #{pic_url}  WHERE `id` = #{user_id};
+        UPDATE `luckin_coffee`.`user`
+        SET `avatar` = #{pic_url}
+        WHERE `id` = #{user_id};
     </update>
 
     <update id="updateProfile">
@@ -39,6 +41,14 @@
         SET ${type} = #{value}
         WHERE `id` = #{user_id};
     </update>
+
+    <select id="getUserTodayExpend" resultType="java.lang.Double">
+        SELECT SUM(goods.price * order_goods.count)
+        FROM user_order
+                 INNER JOIN order_goods ON user_order.order_id = order_goods.order_id
+                 INNER JOIN goods ON order_goods.goods_id = goods.id
+        WHERE DATE(user_order.create_time) = CURDATE() AND user_order.user_id =#{user_id}
+    </select>
 
 
 </mapper>

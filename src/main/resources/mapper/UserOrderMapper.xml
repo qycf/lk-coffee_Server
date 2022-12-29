@@ -9,7 +9,8 @@
                og.temperature,
                og.sugar,
                og.count,
-               uo.create_time
+               uo.create_time,
+                uo.status
         FROM order_goods og
                  LEFT JOIN goods g ON og.goods_id = g.id
                  LEFT JOIN user_order uo ON uo.order_id = og.order_id

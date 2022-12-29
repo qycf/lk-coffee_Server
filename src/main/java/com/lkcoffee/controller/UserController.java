@@ -192,6 +192,13 @@ public class UserController {
         return Result.success("修改成功");
     }
 
+    @GetMapping("/expend")
+    @SaCheckLogin
+    public Result<Object> getExpend() {
+        Double userTodayExpend = userMapper.getUserTodayExpend(StpUtil.getLoginIdAsInt());
+        return Result.success(userTodayExpend);
+    }
+
 
     public boolean codeIsTrue(String redisPath, String phoneNumber, String code) {
 
