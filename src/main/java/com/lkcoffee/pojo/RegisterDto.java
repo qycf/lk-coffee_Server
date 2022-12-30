@@ -11,8 +11,9 @@ import lombok.NoArgsConstructor;
 public class RegisterDto {
 
     private String username;
-    @JsonProperty("phone_number")
-    private String phoneNumber;
+    @JsonProperty("tel")
+    private String tel;
     private String password;
-    private String code;
+    @JsonProperty("verify_code")
+    private String verifyCode;
 }

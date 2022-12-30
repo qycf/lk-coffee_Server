@@ -103,22 +103,23 @@ public class UserController {
 
     @PutMapping
     public HashMap<String, Object> register(@RequestBody RegisterDto registerDto) {
-        boolean b = codeIsTrue(REGISTER_PATH, registerDto.getPhoneNumber(), registerDto.getCode());
+        System.out.println(registerDto);
+        boolean b = codeIsTrue(REGISTER_PATH, registerDto.getTel(), registerDto.getVerifyCode());
         if (!b) {
             throw new APIException("验证码错误");
         }
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(User::getTel, registerDto.getPhoneNumber());
+        lambdaQueryWrapper.eq(User::getTel, registerDto.getTel());
         User one = userService.getOne(lambdaQueryWrapper);
         if (one != null) {
             throw new APIException("该手机号已注册");
         }
 
-        User newUser = new User().setUsername(registerDto.getUsername()).setPassword(DigestUtil.md5Hex(registerDto.getPassword())).setTel(registerDto.getPhoneNumber());
+        User newUser = new User().setUsername(registerDto.getUsername()).setPassword(DigestUtil.md5Hex(registerDto.getPassword())).setTel(registerDto.getTel());
         userService.save(newUser);
 //        设置新用户角色
         userRoleService.save(new UserRole(null, newUser.getId(), 2));
-        UserVo userInfo = userMapper.selectByPhoneNumber(registerDto.getPhoneNumber());
+        UserVo userInfo = userMapper.selectByPhoneNumber(registerDto.getTel());
         String tel = DesensitizedUtil.mobilePhone(userInfo.getTel());
         userInfo.setTel(tel);
         StpUtil.login(newUser.getId());
@@ -200,13 +201,13 @@ public class UserController {
     }
 
 
-    public boolean codeIsTrue(String redisPath, String phoneNumber, String code) {
+    public boolean codeIsTrue(String redisPath, String phoneNumber, String verifyCode) {
 
         if (!redisUtil.hasKey(redisPath + phoneNumber)) {
             return false;
         }
 //        校验验证码
         String verify_code = redisUtil.get(redisPath + phoneNumber).toString();
-        return verify_code.equals(code);
+        return verify_code.equals(verifyCode);
     }
 }
