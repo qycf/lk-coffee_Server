@@ -1,5 +1,6 @@
 package com.lkcoffee.controller;
 
+import cn.dev33.satoken.annotation.SaCheckRole;
 import com.lkcoffee.entity.Menu;
 import com.lkcoffee.exception.APIException;
 import com.lkcoffee.mapper.MenuMapper;
@@ -46,6 +47,8 @@ public class MenuController {
      * @param menu 菜单
      * @return Result
      */
+
+    @SaCheckRole("admin")
     @PostMapping
     public boolean saveOrUpdateMenu(@RequestBody Menu menu) {
         boolean save = menuService.saveOrUpdate(menu);

@@ -11,7 +11,7 @@
  Target Server Version : 80028
  File Encoding         : 65001
 
- Date: 30/12/2022 20:25:30
+ Date: 07/01/2023 13:38:35
 */
 
 SET NAMES utf8mb4;
@@ -32,7 +32,7 @@ CREATE TABLE `address`  (
   `tel` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `addressDetail` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 37 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of address
@@ -73,6 +73,7 @@ INSERT INTO `goods` VALUES (7, '椰云拿铁', '一口吞云，轻盈飘逸', 21
 INSERT INTO `goods` VALUES (8, '生椰爱摩卡', '经典口味', 21.66, '35', 'http://5b0988e595225.cdn.sohucs.com/images/20190426/4d858e9b4a5c49be8d05c8a379dbce9c.jpeg');
 INSERT INTO `goods` VALUES (16, '测试11', '好喝', 8.5, '19.9', 'http://5b0988e595225.cdn.sohucs.com/images/20190426/4d858e9b4a5c49be8d05c8a379dbce9c.jpeg');
 INSERT INTO `goods` VALUES (17, '白开水', '多喝热水', 1.5, '2.9', 'http://5b0988e595225.cdn.sohucs.com/images/20190426/4d858e9b4a5c49be8d05c8a379dbce9c.jpeg');
+INSERT INTO `goods` VALUES (20, '新商品', '没有描述', 1.99, '29.9', 'https://inews.gtimg.com/newsapp_bt/0/15374405403/1000');
 
 -- ----------------------------
 -- Table structure for menu
@@ -83,7 +84,7 @@ CREATE TABLE `menu`  (
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of menu
@@ -121,6 +122,7 @@ INSERT INTO `menu_goods` VALUES (8, 3, 8);
 INSERT INTO `menu_goods` VALUES (15, 0, 5);
 INSERT INTO `menu_goods` VALUES (22, 0, 16);
 INSERT INTO `menu_goods` VALUES (23, 4, 17);
+INSERT INTO `menu_goods` VALUES (26, 26, 20);
 
 -- ----------------------------
 -- Table structure for order_address
@@ -131,7 +133,7 @@ CREATE TABLE `order_address`  (
   `order_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `address_id` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of order_address
@@ -155,6 +157,8 @@ INSERT INTO `order_address` VALUES (22, '20221229183509123732', 36);
 INSERT INTO `order_address` VALUES (23, '20221229183748736707', 36);
 INSERT INTO `order_address` VALUES (24, '20221230172938773421', 37);
 INSERT INTO `order_address` VALUES (25, '20221230174635490759', 36);
+INSERT INTO `order_address` VALUES (26, '20230102191517856727', 36);
+INSERT INTO `order_address` VALUES (27, '20230102191747429035', 36);
 
 -- ----------------------------
 -- Table structure for order_goods
@@ -169,7 +173,7 @@ CREATE TABLE `order_goods`  (
   `temperature` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `count` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 52 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of order_goods
@@ -199,6 +203,11 @@ INSERT INTO `order_goods` VALUES (44, '20221230172938773421', 16, '不加糖', '
 INSERT INTO `order_goods` VALUES (45, '20221230172938773421', 8, '不加糖', '大杯', '热', 1);
 INSERT INTO `order_goods` VALUES (46, '20221230174635490759', 16, '不加糖', '大杯', '热', 1);
 INSERT INTO `order_goods` VALUES (47, '20221230174635490759', 7, '半糖', '大杯', '热', 2);
+INSERT INTO `order_goods` VALUES (48, '20230102191517856727', 4, '不加糖', '中杯', '冰', 1);
+INSERT INTO `order_goods` VALUES (49, '20230102191747429035', 3, '不加糖', '中杯', '冰', 1);
+INSERT INTO `order_goods` VALUES (50, '20230102191747429035', 3, '不加糖', '中杯', '冰', 1);
+INSERT INTO `order_goods` VALUES (51, '20230102191747429035', 3, '不加糖', '中杯', '冰', 1);
+INSERT INTO `order_goods` VALUES (52, '20230102191747429035', 3, '不加糖', '中杯', '冰', 1);
 
 -- ----------------------------
 -- Table structure for role
@@ -209,7 +218,7 @@ CREATE TABLE `role`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role
@@ -230,7 +239,7 @@ CREATE TABLE `user`  (
   `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `create_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
@@ -250,7 +259,7 @@ CREATE TABLE `user_address`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `user_address_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_address
@@ -274,7 +283,7 @@ CREATE TABLE `user_like`  (
   `user_id` int NULL DEFAULT NULL,
   `goods_id` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 58 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 62 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_like
@@ -282,11 +291,11 @@ CREATE TABLE `user_like`  (
 INSERT INTO `user_like` VALUES (5, 6, 4);
 INSERT INTO `user_like` VALUES (8, 6, 2);
 INSERT INTO `user_like` VALUES (12, 6, 8);
-INSERT INTO `user_like` VALUES (13, 6, 1);
-INSERT INTO `user_like` VALUES (14, 1, 1);
 INSERT INTO `user_like` VALUES (18, 1, 17);
 INSERT INTO `user_like` VALUES (52, 1, 5);
 INSERT INTO `user_like` VALUES (57, 9, 16);
+INSERT INTO `user_like` VALUES (58, 1, 6);
+INSERT INTO `user_like` VALUES (60, 1, 2);
 
 -- ----------------------------
 -- Table structure for user_order
@@ -299,7 +308,7 @@ CREATE TABLE `user_order`  (
   `status` int NULL DEFAULT 0,
   `create_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_order
@@ -321,6 +330,8 @@ INSERT INTO `user_order` VALUES (30, 1, '20221229183509123732', 1, '2022-12-29 1
 INSERT INTO `user_order` VALUES (31, 1, '20221229183748736707', 1, '2022-12-29 18:37:49');
 INSERT INTO `user_order` VALUES (32, 9, '20221230172938773421', 1, '2022-12-30 17:29:39');
 INSERT INTO `user_order` VALUES (33, 1, '20221230174635490759', 0, '2022-12-30 17:46:35');
+INSERT INTO `user_order` VALUES (34, 1, '20230102191517856727', 1, '2023-01-02 19:15:18');
+INSERT INTO `user_order` VALUES (35, 1, '20230102191747429035', 1, '2023-01-02 19:17:48');
 
 -- ----------------------------
 -- Table structure for user_role
@@ -331,17 +342,14 @@ CREATE TABLE `user_role`  (
   `user_id` int NULL DEFAULT NULL,
   `role_id` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
 INSERT INTO `user_role` VALUES (1, 1, 1);
-INSERT INTO `user_role` VALUES (2, 2, 2);
-INSERT INTO `user_role` VALUES (3, 5, 2);
 INSERT INTO `user_role` VALUES (4, 6, 2);
-INSERT INTO `user_role` VALUES (5, 7, 2);
-INSERT INTO `user_role` VALUES (6, 8, 2);
 INSERT INTO `user_role` VALUES (7, 9, 2);
+INSERT INTO `user_role` VALUES (8, 1, 2);
 
 SET FOREIGN_KEY_CHECKS = 1;
